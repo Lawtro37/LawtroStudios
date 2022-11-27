@@ -1,0 +1,62 @@
+.header{
+    background-color: lightgrey;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu{
+    background-color: lightgrey;
+    display: flex;
+    justify-content: center;
+    margin-right: 60px;
+}
+
+.menu{
+    position: relative;
+}
+
+.menu p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button {
+    margin-left: 20px;
+    border-style: none;
+    border-radius: 2px;
+    border-color: black;
+    border: 2px;
+    color: black;
+}
+
+a {
+    color: black;
+}
+
+a:link { text-decoration: none; }
+
+
+a:visited { text-decoration: none; }
+
+
+a:hover { text-decoration: none; }
+
+
+a:active { text-decoration: none; }
+
+.logo {
+    margin-top: 10px;
+}
+
+.hasborder {
+    border-style: none;
+    border: 2px;
+}
+
+.frontitle {
+    text-size-adjust: 100;
+    justify-content: center;
+    margin-top: 200px;
+}
