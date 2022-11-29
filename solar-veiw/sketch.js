@@ -265,7 +265,7 @@ function draw() {
       if(mouseIsPressed)
       {
         simulation = "credits"
-        window.location.replace("https://www.lawtrostudios.com/solar-veiw/");
+        window.location.replace("https://www.lawtrostudios.com/solar-veiw/credits.html");
       }
     }
 
