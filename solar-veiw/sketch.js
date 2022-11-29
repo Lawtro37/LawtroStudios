@@ -265,7 +265,7 @@ function draw() {
       if(mouseIsPressed)
       {
         simulation = "credits"
-        window.location.replace("https://lawtro37.github.io/solar-view/credits.html");
+        window.location.replace("https://www.lawtrostudios.com/solar-veiw/");
       }
     }
 
