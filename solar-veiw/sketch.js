@@ -219,7 +219,7 @@ function draw() {
       if(mouseIsPressed)
       { 
         simulation = "facts"
-        window.location.replace("https://lawtro37.github.io/solar-view/Facts.html");
+        window.location.replace("https://www.lawtrostudios.com/solar-veiw/Facts.html");
       }
     }
     pop()
