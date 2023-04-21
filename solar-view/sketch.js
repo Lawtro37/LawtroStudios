@@ -456,7 +456,7 @@ function draw() {
     textSize(15/zoom+zoom*1.5)
     textAlign(CENTER)
     fill(255)
-    text("Jupeter", 730/zoom, 730/zoom)
+    text("Jupiter", 730/zoom, 730/zoom)
     pop()
   }
 
@@ -531,7 +531,7 @@ function draw() {
     textSize(15/zoom+zoom*1.5)
     textAlign(CENTER)
     fill(255)
-    text("Neptute", 1100/zoom, 1100/zoom)
+    text("Neptune", 1100/zoom, 1100/zoom)
     pop()
   }
   
