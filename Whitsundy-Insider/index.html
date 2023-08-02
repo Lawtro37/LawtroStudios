@@ -22,8 +22,6 @@
   crossorigin="anonymous"></script>
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/devtools-detect@1.2.0/dist/devtools-detect.min.js"></script>
-
   <div class="header">
     <div class="header-title">Whitsunday Insider</div>
     <div>
@@ -71,132 +69,8 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCnLQUKtxo8qrK6gmu1MoDu9er4R4SUnr4",
-      authDomain: "whitsunday-insider.firebaseapp.com",
-      databaseURL: "https://whitsunday-insider-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "whitsunday-insider",
-      storageBucket: "whitsunday-insider.appspot.com",
-      messagingSenderId: "432159444041",
-      appId: "1:432159444041:web:9e0e07c30f1fb1eecf8398",
-      measurementId: "G-54098J2K0G"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    function uploadBusiness() {
-
-      console.log("test")
-
-      const name = document.getElementById("name-input").value;
-      const image = document.getElementById("image-input").value;
-      const description = document.getElementById("description-input").value;
-      const breef_description = document.getElementById("small-description-input").value;
-      const goal = document.getElementById("business-goal-input").value;
-      const location = document.getElementById("location-input").value;
-
-      const facebook = document.getElementById("facebook").value;
-      const instagram = document.getElementById("instagram").value;
-      const tiktok = document.getElementById("tiktok").value;
-      const email = document.getElementById("email").value;
-      const phone = document.getElementById("phone number").value;
-      const web = document.getElementById("website").value;
-
-      const employes = document.getElementById("employes").value;
-      const size = document.getElementById("small buseness").value;
-
-      var regex = /\s+/gi;
-      var wordCount = breef_description.trim().replace(regex, ' ').split(' ').length;
-      console.log(wordCount);
-
-      if (name.trim() === "") {
-        console.log("Name is empty");
-        alert("Please enter a valid name for the business.");
-        return;
-      }
-
-      if (wordCount > 25) {
-        console.log("bref description must be less than 25 words");
-        alert("bref description must be less than 25 words");
-        return;
-      }
-
-      if(breef_description == "" || name == "" || goal == "" || image == "" || description == "" || location == ""){
-        console.log("all fealds must be filled");
-        alert("all fealds must be filled.");
-        return;
-      }
-
-      // Check if a business with the same name already exists
-      db.collection("businesses")
-        .where("name", "==", name)
-        .get()
-        .then(function(querySnapshot) {
-          if (querySnapshot.empty) {
-            // No business with the same name exists, proceed with uploading
-            // Set the business information in the specified document
-            db.collection("businesses")
-              .doc(name)
-              .set({
-                breef_discription: breef_description,
-                business_ID: name,
-                business_base_info_sentence: goal,
-                business_image_URL: image,
-                business_name: name,
-                business_info: 
-                {
-                  description: description,
-                  location: location,
-                  reviews_enabled: true,
-                  contacts:{
-                    email: email,
-                    phone: phone,
-                    website: web
-                  },
-                  socals_URL: 
-                  {
-                    facebook: facebook,
-                    instagram: instagram,
-                    tiktok: tiktok
-                  }
-                },
-                aditional_info:
-                {
-                  employes: employes,
-                  small_buseness: size
-                },
-                toatal_rating: 0,
-                acepted: false
-              })
-              .then(function() {
-                console.log("Business information stored in the document:", name);
-                // alert("Business information stored in the document:"+name);
-                // Clear input fields after successful upload
-                document.getElementById("name-input").value = "";
-                document.getElementById("image-input").value = "";
-                document.getElementById("description-input").value = "";
-                document.getElementById("location-input").value = "";
-                window.location.replace("./added.html");
-              })
-              .catch(function(error) {
-                console.error("Error storing business information:", error);
-                alert("Error storing business information:", error);
-              });
-          } else {
-            // A business with the same name already exists
-            console.log("There is already a business with this name:", name);
-            alert("There is already a business with this name:", name)
-          }
-        })
-        .catch(function(error) {
-          console.error("Error checking business name:", error);
-          alert("Error checking business name:", error);
-        });
-    }
-
-  defer
+    //obfuscated for security 
+    function _0x3f36(){const _0x8c9fd6=['Error\x20checking\x20business\x20name:','error','facebook','./added.html','then','empty','log','Error\x20storing\x20business\x20information:','13105axILIw','432159444041','email','tiktok','1016984VUsACp','collection','businesses','phone\x20number','getElementById','employes','description-input','Name\x20is\x20empty','Please\x20enter\x20a\x20valid\x20name\x20for\x20the\x20business.','small\x20buseness','firestore','9ssnUEH','1:432159444041:web:9e0e07c30f1fb1eecf8398','all\x20fealds\x20must\x20be\x20filled.','name-input','image-input','small-description-input','212249uuzZXN','whitsunday-insider.firebaseapp.com','572858ytnchn','location','2064669XbQsXH','whitsunday-insider.appspot.com','where','trim','name','split','685266rspfPV','AIzaSyCnLQUKtxo8qrK6gmu1MoDu9er4R4SUnr4','get','location-input','replace','catch','doc','initializeApp','all\x20fealds\x20must\x20be\x20filled','bref\x20description\x20must\x20be\x20less\x20than\x2025\x20words','276rroMuk','set','value','There\x20is\x20already\x20a\x20business\x20with\x20this\x20name:','length','whitsunday-insider','business-goal-input','Business\x20information\x20stored\x20in\x20the\x20document:','842807PquXfT'];_0x3f36=function(){return _0x8c9fd6;};return _0x3f36();}const _0x36cd07=_0xfa42;(function(_0x2d0440,_0x7f3a45){const _0x4c8006=_0xfa42,_0x54a501=_0x2d0440();while(!![]){try{const _0x3462f3=parseInt(_0x4c8006(0x18e))/0x1+parseInt(_0x4c8006(0x190))/0x2+-parseInt(_0x4c8006(0x192))/0x3+parseInt(_0x4c8006(0x1a2))/0x4*(parseInt(_0x4c8006(0x179))/0x5)+parseInt(_0x4c8006(0x198))/0x6+parseInt(_0x4c8006(0x1aa))/0x7+-parseInt(_0x4c8006(0x17d))/0x8*(-parseInt(_0x4c8006(0x188))/0x9);if(_0x3462f3===_0x7f3a45)break;else _0x54a501['push'](_0x54a501['shift']());}catch(_0x703006){_0x54a501['push'](_0x54a501['shift']());}}}(_0x3f36,0x5630f));const firebaseConfig={'apiKey':_0x36cd07(0x199),'authDomain':_0x36cd07(0x18f),'databaseURL':'https://whitsunday-insider-default-rtdb.europe-west1.firebasedatabase.app','projectId':_0x36cd07(0x1a7),'storageBucket':_0x36cd07(0x193),'messagingSenderId':_0x36cd07(0x17a),'appId':_0x36cd07(0x189),'measurementId':'G-54098J2K0G'};firebase[_0x36cd07(0x19f)](firebaseConfig);function _0xfa42(_0x29e143,_0x2b1aa5){const _0x3f3616=_0x3f36();return _0xfa42=function(_0xfa424c,_0x2186e7){_0xfa424c=_0xfa424c-0x177;let _0x1e98da=_0x3f3616[_0xfa424c];return _0x1e98da;},_0xfa42(_0x29e143,_0x2b1aa5);}const db=firebase[_0x36cd07(0x187)]();function uploadBusiness(){const _0x4293a4=_0x36cd07;console[_0x4293a4(0x177)]('test');const _0xecb733=document['getElementById'](_0x4293a4(0x18b))[_0x4293a4(0x1a4)],_0x280d36=document[_0x4293a4(0x181)](_0x4293a4(0x18c))[_0x4293a4(0x1a4)],_0x2591e7=document['getElementById'](_0x4293a4(0x183))[_0x4293a4(0x1a4)],_0x548558=document[_0x4293a4(0x181)](_0x4293a4(0x18d))[_0x4293a4(0x1a4)],_0x23a714=document['getElementById'](_0x4293a4(0x1a8))[_0x4293a4(0x1a4)],_0x1c9770=document[_0x4293a4(0x181)](_0x4293a4(0x19b))[_0x4293a4(0x1a4)],_0x424573=document[_0x4293a4(0x181)](_0x4293a4(0x1ad))[_0x4293a4(0x1a4)],_0x572d69=document[_0x4293a4(0x181)]('instagram')[_0x4293a4(0x1a4)],_0x1ac91b=document[_0x4293a4(0x181)](_0x4293a4(0x17c))['value'],_0x5cd858=document[_0x4293a4(0x181)](_0x4293a4(0x17b))[_0x4293a4(0x1a4)],_0x465941=document[_0x4293a4(0x181)](_0x4293a4(0x180))[_0x4293a4(0x1a4)],_0x46602e=document['getElementById']('website')[_0x4293a4(0x1a4)],_0x5f44f4=document[_0x4293a4(0x181)](_0x4293a4(0x182))[_0x4293a4(0x1a4)],_0x4fcc5b=document[_0x4293a4(0x181)](_0x4293a4(0x186))['value'];var _0x5658a9=/\s+/gi,_0x543aa9=_0x548558[_0x4293a4(0x195)]()[_0x4293a4(0x19c)](_0x5658a9,'\x20')[_0x4293a4(0x197)]('\x20')[_0x4293a4(0x1a6)];console[_0x4293a4(0x177)](_0x543aa9);if(_0xecb733['trim']()===''){console[_0x4293a4(0x177)](_0x4293a4(0x184)),alert(_0x4293a4(0x185));return;}if(_0x543aa9>0x19){console[_0x4293a4(0x177)](_0x4293a4(0x1a1)),alert(_0x4293a4(0x1a1));return;}if(_0x548558==''||_0xecb733==''||_0x23a714==''||_0x280d36==''||_0x2591e7==''||_0x1c9770==''){console[_0x4293a4(0x177)](_0x4293a4(0x1a0)),alert(_0x4293a4(0x18a));return;}db[_0x4293a4(0x17e)]('businesses')[_0x4293a4(0x194)](_0x4293a4(0x196),'==',_0xecb733)[_0x4293a4(0x19a)]()[_0x4293a4(0x1af)](function(_0x2c281e){const _0x2d3994=_0x4293a4;_0x2c281e[_0x2d3994(0x1b0)]?db[_0x2d3994(0x17e)](_0x2d3994(0x17f))[_0x2d3994(0x19e)](_0xecb733)[_0x2d3994(0x1a3)]({'breef_discription':_0x548558,'business_ID':_0xecb733,'business_base_info_sentence':_0x23a714,'business_image_URL':_0x280d36,'business_name':_0xecb733,'business_info':{'description':_0x2591e7,'location':_0x1c9770,'reviews_enabled':!![],'contacts':{'email':_0x5cd858,'phone':_0x465941,'website':_0x46602e},'socals_URL':{'facebook':_0x424573,'instagram':_0x572d69,'tiktok':_0x1ac91b}},'aditional_info':{'employes':_0x5f44f4,'small_buseness':_0x4fcc5b},'toatal_rating':0x0,'acepted':![]})[_0x2d3994(0x1af)](function(){const _0x1ce785=_0x2d3994;console[_0x1ce785(0x177)](_0x1ce785(0x1a9),_0xecb733),document[_0x1ce785(0x181)](_0x1ce785(0x18b))[_0x1ce785(0x1a4)]='',document[_0x1ce785(0x181)]('image-input')[_0x1ce785(0x1a4)]='',document['getElementById'](_0x1ce785(0x183))[_0x1ce785(0x1a4)]='',document[_0x1ce785(0x181)](_0x1ce785(0x19b))['value']='',window[_0x1ce785(0x191)][_0x1ce785(0x19c)](_0x1ce785(0x1ae));})[_0x2d3994(0x19d)](function(_0x57be0b){const _0x1c4b04=_0x2d3994;console[_0x1c4b04(0x1ac)](_0x1c4b04(0x178),_0x57be0b),alert(_0x1c4b04(0x178),_0x57be0b);}):(console[_0x2d3994(0x177)](_0x2d3994(0x1a5),_0xecb733),alert('There\x20is\x20already\x20a\x20business\x20with\x20this\x20name:',_0xecb733));})[_0x4293a4(0x19d)](function(_0x108e67){const _0x35e2af=_0x4293a4;console[_0x35e2af(0x1ac)](_0x35e2af(0x1ab),_0x108e67),alert(_0x35e2af(0x1ab),_0x108e67);});}defer;
   </script>
    <script>
     // Set the SameSite attribute for the cookie
