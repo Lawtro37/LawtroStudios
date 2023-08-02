@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel = "icon" href = 
+    "./assets/icon.ico" 
+            type = "image/x-icon">
+  
+  <!--<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <link rel="stylesheet" href="style.css">
+  <title>Add Business</title>
+  <script src="https://www.google.com/recaptcha/enterprise.js?render=6Le7BHwmAAAAAOZrKb__LgYteXV6ovBoPySYWFE2"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Whitsunday Insider">
+  <meta name="keywords" content="Whitsunday Insider, Whitsunday">
+  <meta name="author" content="LawtroStudios">
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9212676051976762"
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/devtools-detect@1.2.0/dist/devtools-detect.min.js"></script>
+
+  <div class="header">
+    <div class="header-title">Whitsunday Insider</div>
+    <div>
+    </div>
+  </div>
+  <div class="container">
+
+    <img src="icon.png" alt="Back" width="500" height="500" id="icon">
+
+    <div class="title">Add your business!</div>
+
+    <h1>business info</h1>
+    <input type="text" class="input" placeholder="buseness name" id="name-input">
+    <input type="text" class="input" placeholder="image URL (1x1 aspect ratio)" id="image-input">
+    <input type="text" class="input" placeholder="brief description (less than 25 words long)" id="small-description-input">
+    <input type="text" class="input" placeholder="what does your buseness do?" id="business-goal-input">
+    <textarea class="discription-input" placeholder="description" id="description-input"></textarea>
+    <input type="text" class="input" placeholder="location (adress)" id="location-input">
+
+    <div class="space"></div>
+
+    <h1>optional info</h1>
+    <input type="text" class="input" placeholder="Facebook @" id="facebook">
+    <input type="text" class="input" placeholder="Instagram @" id="instagram">
+    <input type="text" class="input" placeholder="Tiktok @" id="tiktok">
+
+    <!--<h3>recemeded info</h3>-->
+    <input type="text" class="input" placeholder="business e-mail" id="email">
+    <input type="text" class="input" placeholder="business phone number" id="phone number">
+    <input type="text" class="input" placeholder="business website" id="website">
+
+    <div class="space"></div>
+
+    <h1>aditional info</h1>
+    <input type="text" class="input" placeholder="how many people do you enploy full time?" id="employes">
+    <input type="text" class="input" placeholder="do you consider your buseness a small buseness? (yes/no)" id="small buseness">
+
+  <p><h>Please abide by Whitsunday Insider's <a href="./terms_of_use.html">Terms of Use</a></h></p>
+
+  <button type="button" class="button" onclick="uploadBusiness()" onmousedown="uploadBusiness()" id="submit-button">Upload Business</button>
+
+  <h1>.</h1>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCnLQUKtxo8qrK6gmu1MoDu9er4R4SUnr4",
+      authDomain: "whitsunday-insider.firebaseapp.com",
+      databaseURL: "https://whitsunday-insider-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "whitsunday-insider",
+      storageBucket: "whitsunday-insider.appspot.com",
+      messagingSenderId: "432159444041",
+      appId: "1:432159444041:web:9e0e07c30f1fb1eecf8398",
+      measurementId: "G-54098J2K0G"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function uploadBusiness() {
+
+      console.log("test")
+
+      const name = document.getElementById("name-input").value;
+      const image = document.getElementById("image-input").value;
+      const description = document.getElementById("description-input").value;
+      const breef_description = document.getElementById("small-description-input").value;
+      const goal = document.getElementById("business-goal-input").value;
+      const location = document.getElementById("location-input").value;
+
+      const facebook = document.getElementById("facebook").value;
+      const instagram = document.getElementById("instagram").value;
+      const tiktok = document.getElementById("tiktok").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone number").value;
+      const web = document.getElementById("website").value;
+
+      const employes = document.getElementById("employes").value;
+      const size = document.getElementById("small buseness").value;
+
+      var regex = /\s+/gi;
+      var wordCount = breef_description.trim().replace(regex, ' ').split(' ').length;
+      console.log(wordCount);
+
+      if (name.trim() === "") {
+        console.log("Name is empty");
+        alert("Please enter a valid name for the business.");
+        return;
+      }
+
+      if (wordCount > 25) {
+        console.log("bref description must be less than 25 words");
+        alert("bref description must be less than 25 words");
+        return;
+      }
+
+      if(breef_description == "" || name == "" || goal == "" || image == "" || description == "" || location == ""){
+        console.log("all fealds must be filled");
+        alert("all fealds must be filled.");
+        return;
+      }
+
+      // Check if a business with the same name already exists
+      db.collection("businesses")
+        .where("name", "==", name)
+        .get()
+        .then(function(querySnapshot) {
+          if (querySnapshot.empty) {
+            // No business with the same name exists, proceed with uploading
+            // Set the business information in the specified document
+            db.collection("businesses")
+              .doc(name)
+              .set({
+                breef_discription: breef_description,
+                business_ID: name,
+                business_base_info_sentence: goal,
+                business_image_URL: image,
+                business_name: name,
+                business_info: 
+                {
+                  description: description,
+                  location: location,
+                  reviews_enabled: true,
+                  contacts:{
+                    email: email,
+                    phone: phone,
+                    website: web
+                  },
+                  socals_URL: 
+                  {
+                    facebook: facebook,
+                    instagram: instagram,
+                    tiktok: tiktok
+                  }
+                },
+                aditional_info:
+                {
+                  employes: employes,
+                  small_buseness: size
+                },
+                toatal_rating: 0,
+                acepted: false
+              })
+              .then(function() {
+                console.log("Business information stored in the document:", name);
+                // alert("Business information stored in the document:"+name);
+                // Clear input fields after successful upload
+                document.getElementById("name-input").value = "";
+                document.getElementById("image-input").value = "";
+                document.getElementById("description-input").value = "";
+                document.getElementById("location-input").value = "";
+                window.location.replace("./added.html");
+              })
+              .catch(function(error) {
+                console.error("Error storing business information:", error);
+                alert("Error storing business information:", error);
+              });
+          } else {
+            // A business with the same name already exists
+            console.log("There is already a business with this name:", name);
+            alert("There is already a business with this name:", name)
+          }
+        })
+        .catch(function(error) {
+          console.error("Error checking business name:", error);
+          alert("Error checking business name:", error);
+        });
+    }
+
+  defer
+  </script>
+   <script>
+    // Set the SameSite attribute for the cookie
+    document.cookie = "cookieName=cookieValue; SameSite=Strict; Secure";
+  </script>
+</body>
+</html>
