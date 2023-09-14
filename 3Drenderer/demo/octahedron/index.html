@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Custom 3D Renderer</title>
+  </head>
+  <body>
+    <input type="file" id="importButton" accept=".json">
+    <canvas id="renderer" width="800" height="600"></canvas>
+    <label for="strokeCheckbox">Enable Stroke</label>
+    <input type="checkbox" id="strokeCheckbox">
+    <label for="scaleSlider">Scale</label>
+    <input type="range" id="scaleSlider" min="10" max="300" value="100">
+    <script>
+      const canvas = document.getElementById('renderer');
+      const ctx = canvas.getContext('2d');
+      const importButton = document.getElementById('importButton');
+      const strokeCheckbox = document.getElementById('strokeCheckbox');
+      const scaleSlider = document.getElementById('scaleSlider');
+
+      let shapeData = {
+        scale: 100,
+        vertices: [
+          [0, 1, 0],
+          [1, 0, 0],
+          [0, 0, 1],
+          [-1, 0, 0],
+          [0, 0, -1],
+          [0, -1, 0]
+        ],
+        edges: [
+          [0, 1],
+          [0, 2],
+          [0, 3],
+          [0, 4],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 1],
+          [1, 5],
+          [2, 5],
+          [3, 5],
+          [4, 5]
+        ],
+        faces: [
+          { vertices: [0, 1, 2], color: "rgba(255, 0, 0, 0.5)" },
+          { vertices: [0, 2, 3], color: "rgba(0, 255, 0, 0.5)" },
+          { vertices: [0, 3, 4], color: "rgba(0, 0, 255, 0.5)" },
+          { vertices: [0, 4, 1], color: "rgba(255, 255, 0, 0.5)" },
+          { vertices: [1, 2, 5], color: "rgba(255, 0, 255, 0.5)" },
+          { vertices: [2, 3, 5], color: "rgba(0, 255, 255, 0.5)" },
+          { vertices: [3, 4, 5], color: "rgba(255, 255, 255, 0.5)" },
+          { vertices: [4, 1, 5], color: "rgba(128, 128, 128, 0.5)" }
+        ],
+        stroke: false, // Default stroke setting
+      };
+
+      try {
+        shapeData = JSON.parse(".../shapes/octahedron.json");
+        // Update UI elements based on loaded data
+        scaleSlider.value = shapeData.scale || 100;
+        strokeCheckbox.checked = shapeData.stroke || false;
+        enableStroke = shapeData.stroke; // Update data
+        scale = shapeData.scale; // Update data
+      } catch (error) {
+        console.error('Error parsing JSON data:', error);
+      }
+
+      // Handle file input change event
+      importButton.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          try {
+            shapeData = JSON.parse(e.target.result);
+            // Update UI elements based on loaded data
+            scaleSlider.value = shapeData.scale || 100;
+            strokeCheckbox.checked = shapeData.stroke || false;
+            enableStroke = shapeData.stroke; // Update data
+            scale = shapeData.scale; // Update data
+          } catch (error) {
+            console.error('Error parsing JSON data:', error);
+          }
+        };
+
+        reader.readAsText(file);
+      });
+
+      let scale = shapeData.scale; // Adjust the scale of the shape
+      let angleX = 0;
+      let angleY = 0;
+      let angleZ = 0; // Initialize angleZ
+
+      // Toggle stroke based on checkbox state
+      let enableStroke = shapeData.stroke;
+
+      strokeCheckbox.addEventListener('change', (event) => {
+        enableStroke = event.target.checked;
+        shapeData.stroke = enableStroke; // Update data
+        draw();
+      });
+
+      scaleSlider.addEventListener('input', (event) => {
+        scale = parseInt(event.target.value);
+        shapeData.scale = scale; // Update data
+        draw();
+      });
+
+      function project(x, y, z) {
+        const projectedX = x + canvas.width / 2;
+        const projectedY = y + canvas.height / 2;
+        return [projectedX, projectedY];
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const vertices = shapeData.vertices;
+        const edges = shapeData.edges;
+        const faces = shapeData.faces;
+
+        for (const face of faces) {
+          const faceVertices = face.vertices.map((vertexIndex) => vertices[vertexIndex]);
+
+          ctx.fillStyle = face.color; // Set the face color
+
+          if (enableStroke) {
+            ctx.strokeStyle = 'black'; // Set the stroke color
+            ctx.lineWidth = scale / 100; // Set the stroke width based on scale
+          }
+
+          ctx.beginPath();
+          let prevProjected = null;
+          for (const vertex of faceVertices) {
+            let [x, y, z] = vertex;
+
+            // Apply rotation
+            const cosX = Math.cos(angleX);
+            const sinX = Math.sin(angleX);
+            const cosY = Math.cos(angleY);
+            const sinY = Math.sin(angleY);
+            const cosZ = Math.cos(angleZ);
+            const sinZ = Math.sin(angleZ);
+
+            // Rotation around X-axis
+            const newY = y * cosX - z * sinX;
+            const newZ = y * sinX + z * cosX;
+
+            // Rotation around Y-axis
+            const newX = x * cosY + newZ * sinY;
+            const newZ2 = -x * sinY + newZ * cosY;
+
+            // Rotation around Z-axis
+            x = newX * cosZ - newY * sinZ;
+            y = newX * sinZ + newY * cosZ;
+            z = newZ2;
+
+            const [xProjected, yProjected] = project(x * scale, y * scale, z * scale);
+
+            if (prevProjected) {
+              ctx.lineTo(xProjected, yProjected);
+            } else {
+              ctx.moveTo(xProjected, yProjected);
+            }
+
+            prevProjected = [xProjected, yProjected];
+          }
+
+          ctx.closePath();
+          ctx.fill();
+
+          if (enableStroke) {
+            ctx.stroke();
+          }
+        }
+      }
+
+      let x = 0;
+      let y = 0;
+
+      canvas.addEventListener('mousemove', (event) => {
+        x = event.clientX; // Horizontal
+        y = event.clientY; // Vertical
+      });
+
+      function animate() {
+        angleX += 0.01; // Rotate around X-axis
+        angleY += 0.01; // Rotate around Y-axis
+        angleZ += 0.01; // Rotate around Z-axis
+        draw();
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
